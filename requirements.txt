@@ -1,5 +1,8 @@
 typer
 gitpython
-jinja2
 requests
 python-dotenv
+# Test dependencies
+pytest>=7.0
+pytest-cov>=4.0
+pytest-mock>=3.10

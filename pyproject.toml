@@ -6,10 +6,62 @@ build-backend = "setuptools.build_meta"
 name = "report-bot"
 version = "0.1.0"
 description = "Daily & Weekly Git Report CLI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "PerMees", email = "phucle.2971.dd@gmail.com"}
+]
+keywords = ["git", "cli", "report", "productivity"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
 dependencies = [
-  "typer",
-  "gitpython",
+    "typer",
+    "gitpython",
+    "requests",
+    "python-dotenv",
 ]
 
 [project.scripts]
-report = "report.cli:main"
+report = "report.main:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-mock>=3.10",
+    "black>=23.0",
+    "ruff>=0.1",
+    "mypy>=1.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+python_classes = ["Test*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+    "--cov=report",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "slow: Slow running tests",
+]
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W", "I", "N"]
