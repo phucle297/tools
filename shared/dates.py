@@ -2,29 +2,12 @@
 
 from datetime import date, datetime, time, timedelta
 
-from shared.dates import (
-    custom_range as _shared_custom_range,
-    last_n_days_range,
-    last_week_range,
-    month_range,
-    this_week_range,
-    today_range,
-    yesterday_range,
-)
 
-__all__ = [
-    "today_range",
-    "yesterday_range",
-    "this_week_range",
-    "last_week_range",
-    "custom_range",
-    "last_n_days_range",
-    "month_range",
-]
-
-
-def custom_range(from_date: str, to_date: str) -> tuple[datetime, datetime]:
-    return _shared_custom_range(from_date, to_date)
+def today_range() -> tuple[datetime, datetime]:
+    today = date.today()
+    start = datetime.combine(today, time.min)
+    end = datetime.combine(today, time.max)
+    return start, end
 
 
 def yesterday_range() -> tuple[datetime, datetime]:
@@ -36,7 +19,7 @@ def yesterday_range() -> tuple[datetime, datetime]:
 
 def this_week_range() -> tuple[datetime, datetime]:
     today = date.today()
-    start_of_week = today - timedelta(days=today.weekday())  # Monday
+    start_of_week = today - timedelta(days=today.weekday())
     end_of_week = start_of_week + timedelta(days=6)
 
     start = datetime.combine(start_of_week, time.min)
@@ -46,7 +29,6 @@ def this_week_range() -> tuple[datetime, datetime]:
 
 def last_week_range() -> tuple[datetime, datetime]:
     today = date.today()
-    # Get the start of last week (Monday of last week)
     start_of_this_week = today - timedelta(days=today.weekday())
     start_of_last_week = start_of_this_week - timedelta(days=7)
     end_of_last_week = start_of_last_week + timedelta(days=6)
@@ -57,18 +39,6 @@ def last_week_range() -> tuple[datetime, datetime]:
 
 
 def custom_range(from_date: str, to_date: str) -> tuple[datetime, datetime]:
-    """Create custom date range from string dates
-
-    Args:
-        from_date: Start date in YYYY-MM-DD format
-        to_date: End date in YYYY-MM-DD format
-
-    Returns:
-        Tuple of (start_datetime, end_datetime)
-
-    Raises:
-        ValueError: If date format is invalid
-    """
     try:
         start_date = datetime.strptime(from_date, "%Y-%m-%d")
         end_date = datetime.strptime(to_date, "%Y-%m-%d")
@@ -84,14 +54,6 @@ def custom_range(from_date: str, to_date: str) -> tuple[datetime, datetime]:
 
 
 def last_n_days_range(days: int) -> tuple[datetime, datetime]:
-    """Get date range for last N days
-
-    Args:
-        days: Number of days to look back (including today)
-
-    Returns:
-        Tuple of (start_datetime, end_datetime)
-    """
     if days < 1:
         raise ValueError("Days must be at least 1")
 
@@ -104,24 +66,11 @@ def last_n_days_range(days: int) -> tuple[datetime, datetime]:
 
 
 def month_range(year: int, month: int) -> tuple[datetime, datetime]:
-    """Get date range for a specific month
-
-    Args:
-        year: Year (e.g., 2024)
-        month: Month (1-12)
-
-    Returns:
-        Tuple of (start_datetime, end_datetime)
-
-    Raises:
-        ValueError: If month is invalid
-    """
     if not 1 <= month <= 12:
         raise ValueError("Month must be between 1 and 12")
 
     start_date = date(year, month, 1)
 
-    # Get last day of month
     if month == 12:
         end_date = date(year + 1, 1, 1) - timedelta(days=1)
     else:

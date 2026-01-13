@@ -1,18 +1,18 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=77.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "report-bot"
-version = "0.1.0"
-description = "Daily & Weekly Git Report CLI"
+name = "toolkit"
+version = "0.3.0"
+description = "A comprehensive toolkit of standalone CLI tools for developers"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
     {name = "PerMees", email = "phucle.2971.dd@gmail.com"}
 ]
-keywords = ["git", "cli", "report", "productivity"]
+keywords = ["git", "cli", "report", "productivity", "toolkit"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -30,6 +30,18 @@ dependencies = [
 
 [project.scripts]
 report = "report.main:main"
+commit = "commit.main:main"
+review = "review.main:main"
+benchmark = "benchmark.main:main"
+mock = "mock.main:main"
+translate = "translate.main:main"
+port = "port.main:main"
+tools = "tools.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["report*", "commit*", "review*", "benchmark*", "mock*", "translate*", "port*", "shared*", "tools"]
+exclude = ["tests*", "*.tests*", "*.benchmarks*"]
 
 [project.optional-dependencies]
 dev = [

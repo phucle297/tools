@@ -7,7 +7,7 @@ from report.cli.commands import advanced, basic, stats
 from report.cli.commands import config as config_cmd
 
 # Create main app
-app = typer.Typer(help="Daily & Weekly Report CLI")
+app = typer.Typer(help="Daily & Weekly Report CLI", add_completion=True)
 
 # Register basic commands (daily, yesterday, weekly, lastweek, range)
 app.command(name="daily")(basic.daily)
