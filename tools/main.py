@@ -18,10 +18,8 @@ def list_tools():
 
     tools_info = {
         "report": "Daily & Weekly Git Report CLI",
-        "commit": "Commit message generator",
         "review": "Code review helper",
         "benchmark": "Performance benchmark CLI",
-        "mock": "Mock data generator",
         "translate": "i18n helper",
         "port": "Port conflict resolver",
     }

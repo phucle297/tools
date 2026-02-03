@@ -7,6 +7,8 @@ from typing import Optional
 
 import typer
 
+from shared.ai import chat_completion
+
 warnings.filterwarnings("ignore", message=".*'translate.main' found in sys.modules.*")
 
 app = typer.Typer(help="Manage and translate i18n resource files", add_completion=True)
@@ -41,6 +43,69 @@ def get_keys_recursive(data: dict, prefix: str = "") -> dict[str, str]:
         else:
             keys[full_key] = str(v)
     return keys
+
+
+@app.callback(invoke_without_command=True)
+def main_callback(
+    ctx: typer.Context,
+    text: Optional[str] = typer.Argument(None, help="Text to translate"),
+    vi: bool = typer.Option(False, "--vi", "-vi", help="Translate to Vietnamese"),
+    en: bool = typer.Option(False, "--en", "-en", help="Translate to English"),
+):
+    """Translate free text or run subcommands.
+
+    Example:
+      translate --vi "Translate me please"
+    """
+
+    # If a subcommand like `check`/`missing`/`stats` is used, skip text mode.
+    if ctx.invoked_subcommand is not None:
+        return
+
+    if text is None:
+        typer.echo(ctx.get_help())
+        raise typer.Exit(code=0)
+
+    if vi and en:
+        typer.echo("❌ Please specify only one target language (--vi or --en)", err=True)
+        raise typer.Exit(code=1)
+
+    if not vi and not en:
+        typer.echo("❌ Please specify target language with --vi or --en", err=True)
+        raise typer.Exit(code=1)
+
+    target = "vi" if vi else "en"
+
+    try:
+        translated = _translate_text_with_ai(text, target)
+    except ValueError as e:
+        typer.echo(f"⚠️  {e}")
+        raise typer.Exit(code=1)
+
+    typer.echo(translated)
+
+
+def _translate_text_with_ai(text: str, target_lang: str) -> str:
+    if target_lang == "vi":
+        language = "Vietnamese"
+    elif target_lang == "en":
+        language = "English"
+    else:
+        raise ValueError("Unsupported target language. Use 'vi' or 'en'.")
+
+    system_prompt = "You are a professional translator. Translate text accurately and naturally."
+    user_prompt = (
+        f"Translate the following text into {language}. "
+        f"Only output the translation in {language}, without any explanation or markup.\n\n"
+        f"Text:\n{text}"
+    )
+
+    return chat_completion(
+        system_prompt,
+        user_prompt,
+        temperature=0.3,
+        max_tokens=500,
+    )
 
 
 @app.command()

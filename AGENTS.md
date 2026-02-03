@@ -8,10 +8,8 @@
 
 A collection of Python-based CLI tools:
 - `report` - Daily & Weekly Git Report CLI
-- `commit` - Commit message generator
 - `review` - Code review helper
 - `benchmark` - Performance benchmark CLI
-- `mock` - Mock data generator
 - `translate` - i18n helper
 - `port` - Port conflict resolver
 
@@ -21,10 +19,8 @@ A collection of Python-based CLI tools:
 .
 ├── bin/                      # CLI entry points
 │   ├── report
-│   ├── commit
 │   ├── review
 │   ├── benchmark
-│   ├── mock
 │   ├── translate
 │   └── port
 ├── report/                   # Git Report CLI
@@ -56,20 +52,10 @@ A collection of Python-based CLI tools:
 │       ├── exporters.py
 │       ├── stats.py
 │       └── tickets.py
-├── commit/                   # Commit Message Generator
-│   ├── __init__.py
-│   ├── main.py
-│   ├── cli.py
-│   ├── git.py
-│   ├── ai.py
-│   └── utils.py
 ├── review/                   # Code Review Helper
 │   ├── __init__.py
 │   └── main.py
 ├── benchmark/                # Performance Benchmark
-│   ├── __init__.py
-│   └── main.py
-├── mock/                     # Mock Data Generator
 │   ├── __init__.py
 │   └── main.py
 ├── translate/                # i18n Helper
@@ -166,11 +152,11 @@ tools completion --shell fish
 
 ### Generated Files
 
-**Fish:** `~/.config/fish/completions/{report,commit,review,benchmark,mock,translate,port,tools}.fish`
+**Fish:** `~/.config/fish/completions/{report,review,benchmark,translate,port,tools}.fish`
 
 **Bash:** `~/.bash_completions/{toolkit.sh,tools.sh}`
 
-**Zsh:** `~/.zsh/completions/_{report,commit,review,benchmark,mock,translate,port,tools}`
+**Zsh:** `~/.zsh/completions/_{report,review,benchmark,translate,port,tools}`
 
 ## Dependencies
 
@@ -205,19 +191,12 @@ report/
 ├── report.cli.handlers → report.ai.summarizer, report.cli.formatters
 └── report.utils.* → shared.dates, shared.utils.categorizer
 
-commit/
-├── commit.main → commit.cli
-├── commit.cli → commit.git, commit.ai, commit.utils
-├── commit.ai → shared.ai.summarizer
-└── commit.git → git.Repo
-
 review/
 ├── review.main → review.cli
 └── review.cli → shared.ai.summarizer
 
 review/main.py
 benchmark/main.py
-mock/main.py
 translate/main.py
 port/main.py
 tools/main.py → shared/completion.py → install_all_{bash,zsh,fish}_completion()

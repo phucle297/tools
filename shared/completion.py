@@ -6,7 +6,7 @@ from pathlib import Path
 import typer
 
 
-TOOLS = ["report", "commit", "review", "benchmark", "mock", "translate", "port"]
+TOOLS = ["report", "review", "benchmark", "translate", "port"]
 
 
 def detect_shell() -> str:

@@ -7,10 +7,8 @@ A comprehensive toolkit of standalone CLI tools for developers.
 | Tool | Description |
 |------|-------------|
 | `report` | Daily & Weekly Git Report CLI |
-| `commit` | Commit message generator |
 | `review` | Code review helper |
 | `benchmark` | Performance benchmark CLI |
-| `mock` | Mock data generator |
 | `translate` | i18n helper |
 | `port` | Port conflict resolver |
 | `tools` | Toolkit manager (list commands, install completion) |
@@ -95,45 +93,6 @@ report tickets --days 7
 
 ---
 
-## commit - Commit Message Generator
-
-Generate high-quality, conventional commit messages.
-
-### Usage
-
-```bash
-# Interactive mode
-commit generate
-
-# With options
-commit generate --type feat --scope auth --subject "add login"
-commit generate --type fix --subject "fix bug"
-commit generate --ai  # AI-generated message
-commit generate --yes  # Auto-commit
-
-# Show staged files
-commit status
-
-# Show diff
-commit diff
-
-# Amend last commit
-commit --amend
-```
-
-### Options
-
-- `--type, -t`: Commit type (feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert)
-- `--scope, -s`: Scope (e.g., 'auth', 'api', 'ui')
-- `--subject, -u`: Short description
-- `--body, -b`: Longer description
-- `--ai, -a`: Generate with AI
-- `--yes, -y`: Skip confirmation
-- `--all, -A`: Stage all changes
-- `--amend`: Amend previous commit
-
----
-
 ## review - Code Review Helper
 
 Review code changes efficiently.
@@ -187,33 +146,6 @@ benchmark clear
 - `-c, --command`: Command to benchmark
 - `-n, --iterations`: Number of iterations (default: 3)
 - `--save/--no-save`: Save result for comparison
-
----
-
-## mock - Mock Data Generator
-
-Generate mock data for testing and demos.
-
-### Usage
-
-```bash
-# Generate mock data
-mock generate --type user --count 10
-mock generate --type product --count 5 --format json
-mock generate --type order --count 20 --format csv
-mock generate --type log --count 100
-mock generate --type event --count 50
-
-# List available generators
-mock list
-```
-
-### Options
-
-- `-t, --type`: Data type (user, product, order, log, event)
-- `-n, --count`: Number of records (default: 10)
-- `-f, --format`: Output format (json, csv)
-- `-s, --seed`: Random seed for reproducibility
 
 ---
 
@@ -319,9 +251,9 @@ source ~/.zshrc
 
 | Shell | Files Created |
 |-------|---------------|
-| Fish | `~/.config/fish/completions/{report,commit,review,benchmark,mock,translate,port,tools}.fish` |
+| Fish | `~/.config/fish/completions/{report,review,benchmark,translate,port,tools}.fish` |
 | Bash | `~/.bash_completions/{toolkit.sh,tools.sh}` |
-| Zsh | `~/.zsh/completions/_{report,commit,review,benchmark,mock,translate,port,tools}` |
+| Zsh | `~/.zsh/completions/_{report,review,benchmark,translate,port,tools}` |
 
 ---
 
@@ -331,17 +263,13 @@ source ~/.zshrc
 .
 ├── bin/                    # CLI entry points
 │   ├── report
-│   ├── commit
 │   ├── review
 │   ├── benchmark
-│   ├── mock
 │   ├── translate
 │   └── port
 ├── report/                 # Report CLI
-├── commit/                 # Commit message generator
 ├── review/                 # Code review helper
 ├── benchmark/              # Performance benchmark
-├── mock/                   # Mock data generator
 ├── translate/              # i18n helper
 ├── port/                   # Port conflict resolver
 ├── tools/                  # Toolkit manager (list, completion)

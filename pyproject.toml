@@ -30,17 +30,25 @@ dependencies = [
 
 [project.scripts]
 report = "report.main:main"
-commit = "commit.main:main"
 review = "review.main:main"
 benchmark = "benchmark.main:main"
-mock = "mock.main:main"
 translate = "translate.main:main"
 port = "port.main:main"
 tools = "tools.main:main"
+grammar = "grammar.main:cli"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["report*", "commit*", "review*", "benchmark*", "mock*", "translate*", "port*", "shared*", "tools"]
+include = [
+    "report*",
+    "review*",
+    "benchmark*",
+    "translate*",
+    "port*",
+    "grammar*",
+    "shared*",
+    "tools",
+]
 exclude = ["tests*", "*.tests*", "*.benchmarks*"]
 
 [project.optional-dependencies]
